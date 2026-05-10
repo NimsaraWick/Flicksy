@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useContentStore } from "../store/content";
 import axios from "axios";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactPlayer from "react-player";
 import { ORIGINAL_IMG_BASE_URL, SMALL_IMG_BASE_URL } from "../utils/constants";
@@ -92,7 +92,7 @@ const WatchPage = () => {
   if (!content)
     return (
       <div className="bg-black text-white h-screen">
-        <Navbar />
+        <NavBar />
         <div className="flex justify-center items-center h-full text-center px-8">
           <h2 className="text-3xl sm:text-5xl font-bold">
             Content not found 😢
@@ -103,7 +103,7 @@ const WatchPage = () => {
 
   return (
     <div className=" min-h-screen bg-black text-white">
-      <Navbar />
+      <NavBar />
 
       {/* 🎥 Trailer Hero */}
       <div className="relative  flex mt-25 bg-gradient-to-b from-black to-blue-950 pb-10">
