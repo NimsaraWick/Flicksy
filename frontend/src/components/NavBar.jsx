@@ -12,7 +12,7 @@ const NavBar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const { setContentType } = useContentStore();
+  const { setContentType, contentType } = useContentStore();
 
   return (
     <header className="bg-transparent max-w-6xl mx-auto flex flex-wrap items-center justify-between p-4 h-20">
@@ -33,14 +33,18 @@ const NavBar = () => {
           <Link
             to={"/"}
             className="hover:text-gray-300 hover:underline"
-            onClick={() => setContentType("movie")}
+            onClick={() => {
+              if (contentType !== "movie") setContentType("movie");
+            }}
           >
             Movies
           </Link>
           <Link
             to={"/"}
             className="hover:text-gray-300 hover:underline"
-            onClick={() => setContentType("tv")}
+            onClick={() => {
+              if (contentType !== "tv") setContentType("tv");
+            }}
           >
             TV Series
           </Link>
@@ -53,7 +57,7 @@ const NavBar = () => {
       {/* User Actions */}
       <div className="flex gap-5 items-center text-2xl z-50">
         <Link to={"/search"}>
-          <Search className="size-7 cursor-pointer text-white hover:text-gray-300" />
+          <Search className="w-6 h-6 cursor-pointer text-white hover:text-gray-300" />
         </Link>
         {user ? (
           <>
@@ -63,7 +67,7 @@ const NavBar = () => {
               className="w-10 h-10 rounded-full cursor-pointer"
             />
             <LogOut
-              className="size-7 cursor-pointer text-white hover:text-gray-300"
+              className="w-6 h-6 cursor-pointer text-white hover:text-gray-300"
               onClick={logout}
             />
           </>
@@ -79,7 +83,7 @@ const NavBar = () => {
         {/* Mobile Menu Toggle */}
         <div className="sm:hidden">
           <Menu
-            className="size-6 cursor-pointer text-white hover:text-gray-300"
+            className="w-6 h-6 cursor-pointer text-white hover:text-gray-300"
             onClick={toggleMobileMenu}
           />
         </div>
@@ -99,7 +103,7 @@ const NavBar = () => {
             to={"/"}
             className="block px-4 py-2 text-white hover:bg-gray-700"
             onClick={() => {
-              setContentType("movie");
+              if (contentType !== "movie") setContentType("movie");
               toggleMobileMenu();
             }}
           >
@@ -109,7 +113,7 @@ const NavBar = () => {
             to={"/"}
             className="block px-4 py-2 text-white hover:bg-gray-700"
             onClick={() => {
-              setContentType("tv");
+              if (contentType !== "tv") setContentType("tv");
               toggleMobileMenu();
             }}
           >

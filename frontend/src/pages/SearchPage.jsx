@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useContentStore } from "../store/content";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import { Search } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -16,7 +16,9 @@ const SearchPage = () => {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    tab === "movie" ? setContentType("movie") : setContentType("tv");
+    if (tab === "movie" || tab === "tv") {
+      setContentType(tab);
+    }
     setResults([]);
   };
 
@@ -26,23 +28,29 @@ const SearchPage = () => {
       const res = await axios.get(`/api/v1/search/${activeTab}/${searchTerm}`);
       setResults(res.data.content);
     } catch (error) {
-      if (error.response.status === 404) {
+      if (error.response?.status === 404) {
         toast.error(
           "Nothing found, make sure you are searching under the right category"
         );
       } else {
-        toast.error("An error occurblue, please try again later");
+        toast.error("An error occurred, please try again later");
       }
     }
   };
 
   return (
-    <div className="bg-black min-h-screen text-white">
-      <Navbar />
-      <div className="container mx-auto px-4 py-8 mt-20 ">
-        <div className="flex justify-center gap-3 mb-4">
+    <div
+      className="min-h-screen text-white"
+      style={{
+        background:
+          "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+      }}
+    >
+      <NavBar />
+      <div className="container mx-auto px-4 py-8 mt-30">
+        <div className="flex justify-center gap-3 mb-4 relative z-40">
           <button
-            className={`py-2 px-4 rounded ${
+            className={`py-2 px-4 rounded inline-flex items-center justify-center cursor-pointer transition-colors relative z-50 pointer-events-auto ${
               activeTab === "movie" ? "bg-blue-600" : "bg-gray-800"
             } hover:bg-blue-700`}
             onClick={() => handleTabClick("movie")}
@@ -50,7 +58,7 @@ const SearchPage = () => {
             Movies
           </button>
           <button
-            className={`py-2 px-4 rounded ${
+            className={`py-2 px-4 rounded inline-flex items-center justify-center cursor-pointer transition-colors relative z-50 pointer-events-auto ${
               activeTab === "tv" ? "bg-blue-600" : "bg-gray-800"
             } hover:bg-blue-700`}
             onClick={() => handleTabClick("tv")}
@@ -58,7 +66,7 @@ const SearchPage = () => {
             TV Shows
           </button>
           <button
-            className={`py-2 px-4 rounded ${
+            className={`py-2 px-4 rounded inline-flex items-center justify-center cursor-pointer transition-colors relative z-50 pointer-events-auto ${
               activeTab === "person" ? "bg-blue-600" : "bg-gray-800"
             } hover:bg-blue-700`}
             onClick={() => handleTabClick("person")}
@@ -68,7 +76,7 @@ const SearchPage = () => {
         </div>
 
         <form
-          className="flex gap-2 items-stretch mb-8 max-w-2xl mx-auto"
+          className="flex gap-2 items-stretch mb-8 max-w-2xl mx-auto relative z-40"
           onSubmit={handleSearch}
         >
           <input
@@ -78,8 +86,11 @@ const SearchPage = () => {
             placeholder={"Search for a " + activeTab}
             className="w-full p-2 rounded bg-gray-800 text-white"
           />
-          <button className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
-            <Search className="size-6" />
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded inline-flex items-center justify-center cursor-pointer relative z-50 pointer-events-auto transition-colors"
+          >
+            <Search className="w-6 h-6" />
           </button>
         </form>
 
@@ -102,7 +113,9 @@ const SearchPage = () => {
                   <Link
                     to={"/watch/" + result.id}
                     onClick={() => {
-                      setContentType(activeTab);
+                      if (activeTab === "movie" || activeTab === "tv") {
+                        setContentType(activeTab);
+                      }
                     }}
                   >
                     <img

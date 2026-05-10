@@ -50,7 +50,7 @@ function HomeScreen() {
             <h1 className="mt-4 text-6xl font-extrabold">
               {trendingContent?.title ||
                 trendingContent?.name ||
-                "Title Not Available"}
+                "Title Loading ...."}
             </h1>
             <p className="mt-2 text-lg text-gray-300">
               {trendingContent?.release_date?.split("-")[0] ||
@@ -61,7 +61,7 @@ function HomeScreen() {
             <p className="mt-4 text-lg text-gray-300">
               {trendingContent?.overview?.length > 200
                 ? trendingContent?.overview.slice(0, 200) + "..."
-                : trendingContent?.overview || "No description available"}
+                : trendingContent?.overview || "Description Loading ...."}
             </p>
           </div>
           <div className="mt-8 flex">
@@ -69,14 +69,14 @@ function HomeScreen() {
               to={`/watch/${trendingContent?.id}`}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-md mr-4 flex items-center"
             >
-              <Play className="size-6 inline-block mr-2 fill-black" /> Play
+              <Play className="w-6 h-6 inline-block mr-2 fill-black" /> Play
             </Link>
 
             <Link
               to={`/watch/${trendingContent?.id}`}
               className="hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-md flex items-center"
             >
-              <Play className="size-6 inline-block mr-2 fill-black" /> More Info
+              <Play className="w-6 h-6 inline-block mr-2 fill-black" /> More Info
             </Link>
           </div>
         </div>

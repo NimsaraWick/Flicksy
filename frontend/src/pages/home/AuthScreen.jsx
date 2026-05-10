@@ -11,24 +11,6 @@ const dynamicPhrases = [
   "Cancel Anytime 🚫💳",
 ];
 
-// const testimonials = [
-//   {
-//     name: "Alex",
-//     quote: "Flicksy changed how I watch movies forever!",
-//     image: "public/images/profile.png",
-//   },
-//   {
-//     name: "Jaya",
-//     quote: "Streaming has never been this smooth.",
-//     image: "public/images/profile.png",
-//   },
-//   {
-//     name: "Emma",
-//     quote: "My kids love it. And I do too!",
-//     image: "public/images/profile.png",
-//   },
-// ];
-
 const AuthScreen = () => {
   const [email, setEmail] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
@@ -44,10 +26,6 @@ const AuthScreen = () => {
     const clockTimer = setInterval(() => {
       setTime(new Date());
     }, 1000);
-
-    // const testimonialTimer = setInterval(() => {
-    //   setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-    // }, 5000);
 
     return () => {
       clearInterval(phraseTimer);
@@ -325,18 +303,18 @@ const AuthScreen = () => {
             Frequently Asked Questions
           </h2>
           {[
-            {
-              q: "Can I cancel anytime?",
-              a: "Yes, cancel whenever you like with no fees.",
-            },
+            // {
+            //   q: "Can I cancel anytime?",
+            //   a: "Yes, cancel whenever you like with no fees.",
+            // },
             {
               q: "What can I watch on Flicksy?",
               a: "You can watch thousands of movies and TV shows.",
             },
-            {
-              q: "Is Flicksy suitable for kids?",
-              a: "Yes! Flicksy has dedicated kids' profiles.",
-            },
+            // {
+            //   q: "Is Flicksy suitable for kids?",
+            //   a: "Yes! Flicksy has dedicated kids' profiles.",
+            // },
           ].map((faq, i) => (
             <details
               key={i}

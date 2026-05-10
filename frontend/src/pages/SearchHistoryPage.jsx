@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import { SMALL_IMG_BASE_URL } from "../utils/constants";
 import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
@@ -42,6 +42,7 @@ const SearchHistoryPage = () => {
         setSearchHistory(res.data.content);
       } catch (error) {
         setSearchHistory([]);
+        console.error("Error fetching search history:", error);
       }
     };
     getSearchHistory();
@@ -52,14 +53,20 @@ const SearchHistoryPage = () => {
       await axios.delete(`/api/v1/search/history/${entry.id}`);
       setSearchHistory(searchHistory.filter((item) => item.id !== entry.id));
     } catch (error) {
-      toast.error("Failed to delete search item");
+      toast.error("Failed to delete search item", error);
     }
   };
 
   if (searchHistory?.length === 0) {
     return (
-      <div className="bg-black min-h-screen text-white">
-        <Navbar />
+      <div
+        className="min-h-screen text-white"
+        style={{
+          background:
+            "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+        }}
+      >
+        <NavBar />
         <div className="max-w-6xl mx-auto px-4 py-8 mt-20">
           <h1 className="text-3xl font-bold mb-8">Search History</h1>
           <div className="flex justify-center items-center h-96">
@@ -71,8 +78,14 @@ const SearchHistoryPage = () => {
   }
 
   return (
-    <div className="bg-black text-white min-h-screen">
-      <Navbar />
+    <div
+      className="text-white min-h-screen"
+      style={{
+        background:
+          "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+      }}
+    >
+      <NavBar />
 
       <div className="max-w-6xl mx-auto px-4 py-8 mt-20">
         <h1 className="text-3xl font-bold mb-8">Search History</h1>
@@ -85,7 +98,7 @@ const SearchHistoryPage = () => {
               <img
                 src={SMALL_IMG_BASE_URL + entry.image}
                 alt="History image"
-                className="size-16 rounded-full object-cover mr-4"
+                className="w-16 h-16 rounded-full object-cover mr-4"
               />
               <div className="flex flex-col">
                 <span className="text-white text-lg">{entry.title}</span>
@@ -106,7 +119,7 @@ const SearchHistoryPage = () => {
                 {entry.searchType[0].toUpperCase() + entry.searchType.slice(1)}
               </span>
               <Trash
-                className="size-5 ml-4 cursor-pointer hover:fill-blue-600 hover:text-blue-600"
+                className="w-5 h-5 ml-4 cursor-pointer hover:fill-blue-600 hover:text-blue-600"
                 onClick={() => handleDelete(entry)}
               />
             </div>
