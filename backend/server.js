@@ -28,13 +28,13 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/media", protectRoute, mediaRoutes);
 app.use("/api/v1/search", protectRoute, searchRoutes);
 
-// if (ENV_VARS.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "./frontend/dist")));
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-//   });
-// }
-app.listen(PORT, () => {
-  console.log("server started at http://localhost:" + PORT);
-  connectDB();
-});
+// Connect to DB before handling requests (useful for serverless)
+connectDB();
+
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log("server started at http://localhost:" + PORT);
+  });
+}
+
+export default app;
