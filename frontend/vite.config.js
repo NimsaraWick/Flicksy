@@ -10,7 +10,7 @@ export default defineConfig({
       "/api": {
 
 
-        target: "https://flicksy-g7ez.vercel.app",
+        target: import.meta.env.VITE_API_URL,
         changeOrigin: true,
       },
     },
