@@ -1,6 +1,7 @@
 // const express = require ('express');
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoutes from "./routes/auth.route.js";
 import mediaRoutes from "./routes/media.route.js";
@@ -17,13 +18,11 @@ const PORT = ENV_VARS.PORT;
 
 app.use(express.json()); //allow us to pass req.body
 app.use(cookieParser());
+app.use(cors());
 
-// app.get("/",(req,res)=>{
-//     res.send("server is ready.what now? .");
-
-// });
-
-// console.log("MONGO_URI: ",process.env.MONGO_URI); to print the mongo url
+app.get("/",(req,res)=>{
+    res.send("API is running...");
+});
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/media", protectRoute, mediaRoutes);
