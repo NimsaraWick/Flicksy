@@ -3,12 +3,14 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = import.meta.env.MODE === "development" ? "" : import.meta.env.VITE_API_URL;
 
 export const useAuthStore = create((set) => ({
   user: null,
   isSigningUp: false,
   isCheckingAuth: true,
   isLoggingOut: false,
+  isLoggingIn: false,
 
   signup: async (credentials) => {
     try {
@@ -37,11 +39,11 @@ export const useAuthStore = create((set) => ({
   logout: async () => {
     set({ isLoggingOut: true });
     try {
-      await axios.post("api/v1/auth/logout");
-      set({ user: null, isLoggingOut: true });
+      await axios.post("/api/v1/auth/logout");
+      set({ user: null, isLoggingOut: false });
       toast.success("Logged out successfully");
     } catch (error) {
-      set({ isLoggingOut: true });
+      set({ isLoggingOut: false });
       toast.error(error.response.data.message || "Logout failed");
     }
   },

@@ -8,7 +8,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:5000",
+
+
+        target: "https://flicksy-g7ez.vercel.app",
+        changeOrigin: true,
       },
     },
   },
