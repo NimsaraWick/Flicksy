@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useContentStore } from "../store/content";
 import NavBar from "../components/NavBar";
-import { Search, Moon, Sparkles } from "lucide-react";
+import { Search } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { ORIGINAL_IMG_BASE_URL } from "../utils/constants";
@@ -39,68 +39,75 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-mirage-obsidian text-white font-sans selection:bg-mirage-gold selection:text-black">
-      <div className="fixed inset-0 mirage-gradient opacity-40 pointer-events-none" />
+    <div
+      className="min-h-screen text-white"
+      style={{
+        background:
+          "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
+      }}
+    >
       <NavBar />
-      
-      <div className="container mx-auto px-6 py-32 relative z-10">
-        {/* Tabs: The Selection */}
-        <div className="flex justify-center gap-8 mb-16">
-          {["movie", "tv", "person"].map((tab) => (
-            <button
-              key={tab}
-              className={`pb-2 text-[10px] tracking-[0.4em] uppercase transition-all duration-500 border-b ${
-                activeTab === tab 
-                ? "text-mirage-gold border-mirage-gold" 
-                : "text-white/20 border-transparent hover:text-white/60"
-              }`}
-              onClick={() => handleTabClick(tab)}
-            >
-              {tab === "movie" ? "Cinema" : tab === "tv" ? "Series" : "Visionaries"}
-            </button>
-          ))}
+      <div className="container mx-auto px-4 py-8 mt-30">
+        <div className="flex justify-center gap-3 mb-4 relative z-40">
+          <button
+            className={`py-2 px-4 rounded inline-flex items-center justify-center cursor-pointer transition-colors relative z-50 pointer-events-auto ${
+              activeTab === "movie" ? "bg-blue-600" : "bg-gray-800"
+            } hover:bg-blue-700`}
+            onClick={() => handleTabClick("movie")}
+          >
+            Movies
+          </button>
+          <button
+            className={`py-2 px-4 rounded inline-flex items-center justify-center cursor-pointer transition-colors relative z-50 pointer-events-auto ${
+              activeTab === "tv" ? "bg-blue-600" : "bg-gray-800"
+            } hover:bg-blue-700`}
+            onClick={() => handleTabClick("tv")}
+          >
+            TV Shows
+          </button>
+          <button
+            className={`py-2 px-4 rounded inline-flex items-center justify-center cursor-pointer transition-colors relative z-50 pointer-events-auto ${
+              activeTab === "person" ? "bg-blue-600" : "bg-gray-800"
+            } hover:bg-blue-700`}
+            onClick={() => handleTabClick("person")}
+          >
+            Person
+          </button>
         </div>
 
-        {/* Search Bar: The Oracle */}
         <form
-          className="flex gap-4 items-center mb-24 max-w-3xl mx-auto"
+          className="flex gap-2 items-stretch mb-8 max-w-2xl mx-auto relative z-40"
           onSubmit={handleSearch}
         >
-          <div className="relative flex-1 group">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={"REVEAL_" + activeTab.toUpperCase() + "..."}
-              className="w-full py-5 px-8 bg-white/5 border border-white/5 rounded-full text-mirage-gold focus:border-mirage-gold/40 focus:outline-none transition-all duration-500 placeholder:text-white/10 tracking-[0.2em]"
-            />
-            <Sparkles className="absolute right-6 top-1/2 -translate-y-1/2 text-white/5 group-focus-within:text-mirage-gold/20 transition-colors" size={18} />
-          </div>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder={"Search for a " + activeTab}
+            className="w-full p-2 rounded bg-gray-800 text-white"
+          />
           <button
             type="submit"
-            className="bg-mirage-gold hover:bg-white text-black p-5 rounded-full transition-all duration-500 gold-glow"
+            className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded inline-flex items-center justify-center cursor-pointer relative z-50 pointer-events-auto transition-colors"
           >
             <Search className="w-6 h-6" />
           </button>
         </form>
 
-        {/* Results: The Manifestation */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {results.map((result) => {
             if (!result.poster_path && !result.profile_path) return null;
 
             return (
-              <div key={result.id} className="group/item">
+              <div key={result.id} className="bg-gray-800 p-4 rounded">
                 {activeTab === "person" ? (
                   <div className="flex flex-col items-center">
-                    <div className="relative rounded-2xl overflow-hidden border border-white/5 grayscale group-hover/item:grayscale-0 transition-all duration-1000">
-                      <img
-                        src={ORIGINAL_IMG_BASE_URL + result.profile_path}
-                        alt={result.name}
-                        className="max-h-96 w-full object-cover"
-                      />
-                    </div>
-                    <h2 className="mt-6 text-mirage-gold/60 text-[10px] tracking-[0.3em] uppercase font-light group-hover/item:text-mirage-gold transition-colors">{result.name}</h2>
+                    <img
+                      src={ORIGINAL_IMG_BASE_URL + result.profile_path}
+                      alt={result.name}
+                      className="max-h-96 rounded mx-auto"
+                    />
+                    <h2 className="mt-2 text-xl font-bold">{result.name}</h2>
                   </div>
                 ) : (
                   <Link
@@ -110,20 +117,15 @@ const SearchPage = () => {
                         setContentType(activeTab);
                       }
                     }}
-                    className="block"
                   >
-                    <div className="mirage-card rounded-2xl overflow-hidden relative">
-                      <img
-                        src={ORIGINAL_IMG_BASE_URL + result.poster_path}
-                        alt={result.title || result.name}
-                        className="w-full h-auto object-cover grayscale brightness-75 group-hover/item:grayscale-0 group-hover/item:brightness-100 transition-all duration-1000"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-mirage-obsidian via-transparent to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-1000 flex items-end p-6">
-                        <h2 className="text-white font-serif italic text-xl">
-                          {result.title || result.name}
-                        </h2>
-                      </div>
-                    </div>
+                    <img
+                      src={ORIGINAL_IMG_BASE_URL + result.poster_path}
+                      alt={result.title || result.name}
+                      className="w-full h-auto rounded"
+                    />
+                    <h2 className="mt-2 text-xl font-bold">
+                      {result.title || result.name}
+                    </h2>
                   </Link>
                 )}
               </div>

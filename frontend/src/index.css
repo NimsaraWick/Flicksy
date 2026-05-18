@@ -1,96 +1,77 @@
 @import "tailwindcss";
 
-:root {
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Cormorant Garamond", serif;
-  --mirage-gold: #d4af37;
-  --mirage-obsidian: #050505;
+.hero-bg {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)),
+    url("/assets/hero.png");
+  /* background-image: linear-gradient(rgba(184, 196, 220, 1), rgba(0, 0, 0, 0.8)), url("/images/hero_3.png"); */
+  /* background-image: linear-gradient(rgba(27, 152, 218, 0.5), rgba(255, 255, 255, 0.1)), url("/images/hero_3.png"); */
+  /* background-size: contain;
+    background-position: center;
+    background-repeat: repeat-x; */
+  /* animation: slideRight 30s linear infinite; */
 }
 
-body {
-  font-family: var(--font-sans);
-  background-color: var(--mirage-obsidian);
-  color: #e5e7eb;
-  overflow-x: hidden;
+@keyframes slideRight {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: 100% center;
+  }
 }
 
-.mirage-gradient {
-  background: radial-gradient(circle at center, #121212 0%, #050505 100%);
+shimmer {
+  background-size: 1000px 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite linear;
 }
 
-.mirage-glass {
-  background: rgba(18, 18, 18, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(212, 175, 55, 0.1);
-}
-
-.gold-glow {
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15), 0 0 40px rgba(212, 175, 55, 0.05);
-}
-
-.text-gold {
-  color: var(--mirage-gold);
-}
-
-.font-serif {
-  font-family: var(--font-serif);
-}
-
-.mirage-card {
-  background: #0a0a0a;
-  border: 1px solid rgba(212, 175, 55, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.mirage-card:hover {
-  border-color: var(--mirage-gold);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
-}
-
-.hero-overlay {
-  background: linear-gradient(to top, var(--mirage-obsidian) 0%, transparent 50%, var(--mirage-obsidian) 100%);
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {  
+    background-position: 1000px 0;
+  }
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(212, 175, 55, 0.2);
-  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
 }
 ::-webkit-scrollbar-track {
-  background-color: var(--mirage-obsidian);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
-/* Grain Overlay */
-.mirage-grain::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 9999;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-.noir-filter {
-  filter: grayscale(100%) contrast(110%) brightness(80%);
-}
-
-.gold-border-gradient {
-  border-image: linear-gradient(to bottom, rgba(212, 175, 55, 0.5), transparent) 1;
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
 }

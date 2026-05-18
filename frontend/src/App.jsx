@@ -6,20 +6,29 @@ import { SignupPage } from "./pages/SignupPage.jsx";
 import WatchPage from "./pages/WatchPage";
 import SearchPage from "./pages/SearchPage.jsx";
 import SearchHistoryPage from "./pages/SearchHistoryPage.jsx";
+import Footer from "./components/Footer.jsx";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authUser.js";
 import { useEffect } from "react";
-import LoadingScreen from "./components/LoadingScreen.jsx";
+import { Loader } from "lucide-react";
 
 function App() {
+  console.log("In the App");
   const { user, isCheckingAuth, authCheck } = useAuthStore();
+  console.log("auth user is here : ", user);
 
   useEffect(() => {
     authCheck();
-  }, [authCheck]);
+  }, []);
 
   if (isCheckingAuth) {
-    return <LoadingScreen />;
+    return (
+      <div className=" h-screen">
+        <div className="flex justify-center items-center bg-black h-full">
+          <Loader className="animate-spin text-blue-600 size-10" />
+        </div>
+      </div>
+    );
   }
 
   return (
