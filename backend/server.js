@@ -10,6 +10,7 @@ import searchRoutes from "./routes/search.route.js";
 import { protectRoute } from "./middleware/protectRoute.js";
 import { ENV_VARS } from "./config/envVars.js";
 import { connectDB } from "./config/db.js";
+import { setupSwagger } from "./utils/swagger.js";
 
 const app = express();
 
@@ -22,6 +23,8 @@ app.use(cors({
     origin: ENV_VARS.CLIENT_URL,
     credentials: true,
 }));
+
+setupSwagger(app);
 
 app.get("/",(req,res)=>{
     res.send("API is running...");

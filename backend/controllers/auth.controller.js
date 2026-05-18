@@ -1,5 +1,7 @@
 import { User } from "../models/user.js";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { ENV_VARS } from "../config/envVars.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokens.js";
 
 export async  function signup(req,res){
@@ -88,7 +90,11 @@ export async  function login(req,res){
 export async  function logout(req,res){
     try{
         // res.send("logout route");
-        res.clearCookie("jwt-flicksy");
+        res.clearCookie("jwt-flicksy", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        });
         res.status(200).json({status:true,message:"Logged out successfully"});
     }catch(error){
         console.log("Error in logout controller",error.message);
@@ -97,11 +103,27 @@ export async  function logout(req,res){
 }
 
 export async function authCheck(req, res) {
-    try{
-        res.status(200).json({success:true , user:req.user});
-    }catch (error) {
-        console.log("error authcheck controller " , error.message);
-        res.status(500).json({success: false , message: "Internal Server Error"});
+    try {
+        const token = req.cookies["jwt-flicksy"];
+
+        if (!token) {
+            return res.status(200).json({ success: true, user: null });
+        }
+
+        const decoded = jwt.verify(token, ENV_VARS.JWT_SECRET);
+        if (!decoded) {
+            return res.status(200).json({ success: true, user: null });
+        }
+
+        const user = await User.findById(decoded.userId).select("-password");
+
+        if (!user) {
+            return res.status(200).json({ success: true, user: null });
+        }
+
+        res.status(200).json({ success: true, user: user });
+    } catch (error) {
+        console.log("Error in authCheck controller", error.message);
+        res.status(200).json({ success: true, user: null });
     }
-    
 }
