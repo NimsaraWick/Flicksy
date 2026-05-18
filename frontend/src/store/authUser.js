@@ -55,9 +55,7 @@ export const useAuthStore = create((set) => ({
       set({ user: response.data.user, isCheckingAuth: false });
     } catch (error) {
       set({ isCheckingAuth: false, user: null });
-      if (error.response?.status !== 401) {
-        toast.error(error.response?.data?.message || "An error occurred");
-      }
+      // No toast here to keep initial load clean
     }
   },
   setUser: (user) => set({ user }),
