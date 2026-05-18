@@ -7,8 +7,8 @@ export const generateTokenAndSetCookie = (userId,res)=>{
     res.cookie("jwt-flicksy",token,{
         maxAge:15*24*60*60*1000, // 15 days in milliseconds
         httpOnly:true, //prevent XSS attacks cross-site scripting attacks
-        sameSite:"strict",//CSRF attacks cross-site request forgery
-        secure: ENV_VARS.NODE_ENV !== "development", //true in production
+        sameSite:"none",//Required for cross-site cookies
+        secure: true, //Required for sameSite: "none"
     });
     return token;
 };

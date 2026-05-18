@@ -1,365 +1,185 @@
-import { ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ChevronRight, Moon, Sparkles, ShieldCheck, Play, ArrowDown } from "lucide-react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Footer from "../../components/Footer";
-
-const dynamicPhrases = [
-  "Award-winning Originals ✨",
-  "Blockbusters & Classics 🎬",
-  "TV for the Whole Family 👨‍👩‍👧‍👦",
-  "Watch Anywhere, Anytime 📱💻📺",
-  "Cancel Anytime 🚫💳",
-];
 
 const AuthScreen = () => {
   const [email, setEmail] = useState("");
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [time, setTime] = useState(new Date());
-  // const [testimonialIndex, setTestimonialIndex] = useState(0);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const phraseTimer = setInterval(() => {
-      setPhraseIndex((prev) => (prev + 1) % dynamicPhrases.length);
-    }, 3000);
-
-    const clockTimer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(phraseTimer);
-      clearInterval(clockTimer);
-      // clearInterval(testimonialTimer);
-    };
-  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     navigate("/signup?email=" + email);
   };
 
-  // const currentTestimonial = testimonials[testimonialIndex];
-
   return (
-    <div className="hero-bg">
-      {/* Navbar */}
-      <header className="max-w-6xl mx-auto flex items-center justify-between p-4 ">
-        <img
-          src="/images/flicksy_logo.png"
-          alt="Flicksy Logo"
-          className="w-32 md:w-52"
+    <div className="relative min-h-screen bg-mirage-obsidian overflow-hidden font-sans selection:bg-mirage-gold selection:text-black mirage-grain">
+      {/* Immersive Background */}
+      <div className="absolute inset-0 z-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center grayscale brightness-[0.3] contrast-125 scale-105"
+          style={{ backgroundImage: "url('/images/hero_3.webp')" }}
         />
-        <Link
-          to={"/login"}
-          className="bg-blue-600 text-xl text-white flex items-center justify-center px-6 py-0 rounded hover:bg-blue-500 transition h-12"
-        >
-          Sign In
-        </Link>
+        <div className="absolute inset-0 mirage-gradient opacity-80" />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      {/* Navigation */}
+      <header className="fixed top-0 left-0 w-full z-50 p-8">
+        <nav className="max-w-7xl mx-auto flex items-center justify-between">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-3"
+          >
+            <Moon className="text-mirage-gold" size={24} />
+            <span className="text-2xl font-serif italic text-white tracking-[0.2em]">Flicksy</span>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <Link
+              to={"/login"}
+              className="text-mirage-silver/60 text-[10px] tracking-[0.4em] uppercase hover:text-mirage-gold transition-colors duration-500 flex items-center gap-4"
+            >
+              Member_Login <ChevronRight size={14} className="text-mirage-gold" />
+            </Link>
+          </motion.div>
+        </nav>
       </header>
 
-      {/* hero section */}
-      <div className="flex flex-col items-center justify-center text-center py-40 -mt-5 text-white max-w-6xl mx-auto pt-25">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 mx-auto text-[4rem] font-bold text-transparent bg-[url('https://images.unsplash.com/photo-1725714354604-cacdb5c9a027?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-[length:200%] bg-[0_50%] bg-clip-text [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] animate-[bgMove_5s_infinite_alternate_linear] ">
-          {" "}
-          Unlimited Movies , TV Shows and More{" "}
-        </h1>
-        <p className="text-xl mb-2 animate-bounce text-blue-300">
-          {dynamicPhrases[phraseIndex]}
-        </p>
-        <p className="mb-4">
-          Current Time:{" "}
-          <span className="text-blue-400 font-mono">
-            {time.toLocaleTimeString()}
-          </span>
-        </p>
-        <p className="mb-4">
-          Ready to watch? Enter your Email to create or restart your membership
-        </p>
-        <form
-          className="flex flex-col md:flex-row gap-4 w-1/2 h-12"
-          onSubmit={handleFormSubmit}
+      {/* Hero: The Statement */}
+      <main className="relative z-10 flex flex-col items-center justify-center text-center px-6 min-h-screen">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="max-w-5xl"
         >
-          <input
-            type="email"
-            required
-            placeholder="Email address"
-            className="p-4 rounded flex-1 bg-black/80 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-xl flex items-center justify-center px-6 py-3 rounded hover:bg-blue-500 transition"
-          >
-            Get Started <ChevronRight className="ml-2 size-6" />
-          </button>
-        </form>
-      </div>
-
-      {/* separator */}
-      <div className="h-1 w-full bg-sky-500 mt-17" aria-hidden="true" />
-
-      {/* 1st section */}
-      <div
-        className="py-10  text-white inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
-        }}
-      >
-        <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2">
-          {/* left side */}
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Enjoy on your TV
-            </h2>
-            <p className="text-lg md:text-xl">
-              Watch on SmartTV s Play Station ,Xbox Chromecast ,Apple TV ,sky
-              Ray Players, and more.
-            </p>
+          <div className="flex items-center justify-center gap-4 mb-10 opacity-40">
+            <div className="h-[1px] w-12 bg-mirage-gold" />
+            <span className="text-[10px] tracking-[0.6em] uppercase text-mirage-gold font-light">The_Noir_Archive</span>
+            <div className="h-[1px] w-12 bg-mirage-gold" />
           </div>
-          {/* right side */}
-          <div className="flex-1 relative">
-            <img
-              src="/assets/tv.png"
-              alt="Tv image"
-              className="mt-4 z-20 relative"
-            />
-            <video
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-1/2 z-10"
-              playsInline
-              autoPlay={true}
-              muted
-              loop
+
+          <h1 className="text-7xl md:text-9xl font-serif mb-12 text-white italic tracking-tighter leading-none">
+            Cinema_In_Its <br />
+            <span className="text-mirage-gold not-italic">Purest_Form</span>
+          </h1>
+
+          <p className="text-xl md:text-2xl text-mirage-silver/40 font-light max-w-2xl mx-auto mb-16 leading-relaxed">
+            A curated sanctuary for the distinguished viewer. Transcend the noise and enter the mirage of infinite storytelling.
+          </p>
+
+          <form
+            className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-w-2xl mx-auto"
+            onSubmit={handleFormSubmit}
+          >
+            <div className="relative flex-1 w-full">
+              <input
+                type="email"
+                required
+                placeholder="YOUR_ACCESS_KEY (EMAIL)"
+                className="w-full px-8 py-6 bg-white/5 border border-white/10 text-mirage-gold focus:border-mirage-gold/40 focus:outline-none transition-all duration-500 placeholder:text-white/10 rounded-full tracking-widest text-sm"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full md:w-auto bg-mirage-gold text-black font-bold px-12 py-6 hover:bg-white transition-all duration-500 flex items-center justify-center group rounded-full gold-glow uppercase tracking-[0.2em] text-xs"
             >
-              <source src="/assets/hero-vid.m4v" type="video/mp4" />
-            </video>
+              Get_Started <Play className="ml-4 w-4 h-4 fill-current" />
+            </button>
+          </form>
+        </motion.div>
+
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-12 flex flex-col items-center gap-4 opacity-20"
+        >
+          <span className="text-[8px] tracking-[0.5em] uppercase text-mirage-gold font-light">Explore_Void</span>
+          <ArrowDown size={14} className="text-mirage-gold" />
+        </motion.div>
+      </main>
+
+      {/* Feature Sections: Elegant & Unique */}
+      <section className="relative z-10 bg-mirage-obsidian py-64">
+        {/* Large Image Showcase */}
+        <div className="max-w-7xl mx-auto px-10 mb-64">
+          <div className="grid lg:grid-cols-12 gap-20 items-center">
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <div className="flex items-center gap-4 mb-8">
+                <Sparkles className="text-mirage-gold size-4" />
+                <span className="text-mirage-gold/60 font-light tracking-[0.4em] text-[10px] uppercase">Curated_Selection</span>
+              </div>
+              <h2 className="text-6xl md:text-7xl font-serif text-white italic mb-10 leading-tight">
+                Beyond <br /> The_Standard
+              </h2>
+              <p className="text-xl text-mirage-silver/40 font-light leading-relaxed mb-12">
+                We don't just host content; we refine it. Every title in the Mirage is hand-selected for the visionary spirit.
+              </p>
+              <div className="flex gap-12">
+                <div>
+                  <p className="text-3xl text-white font-serif italic mb-2">10K+</p>
+                  <p className="text-[10px] tracking-widest uppercase text-mirage-gold/40">Masterpieces</p>
+                </div>
+                <div>
+                  <p className="text-3xl text-white font-serif italic mb-2">4K</p>
+                  <p className="text-[10px] tracking-widest uppercase text-mirage-gold/40">Native_Resolution</p>
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-7 order-1 lg:order-2">
+              <div className="relative aspect-[16/9] rounded-3xl overflow-hidden gold-border-gradient border">
+                <img src="/images/hero_2.jpg" alt="Atmospheric" className="w-full h-full object-cover grayscale brightness-50 contrast-125" />
+                <div className="absolute inset-0 bg-gradient-to-r from-mirage-obsidian via-transparent to-transparent" />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* separator */}
-      <div className="h-1 w-full bg-sky-500" aria-hidden="true" />
-
-      {/* 2nd section */}
-      <div
-        className="py-10 text-white inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
-        }}
-      >
-        <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2">
-          {/* left side */}
-          <div className="flex-1">
-            <div className=" relative">
-              <img
-                src="/assets/stranger-things-lg.png"
-                alt="Stranger Things img"
-                className="mt-4"
-              />
-
-              <div className=" flex items-center gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 bg-black w-3/4 lg:w-1/2 h-24  border border-slate-500 rounded-md px-2">
-                <img
-                  src="/assets/stranger-things-sm.png"
-                  alt="image"
-                  className="h-full"
-                />
-                <div className="flex justify-between items-center w-full">
-                  <div className="flex flex-col gap-0">
-                    <span className="text-md lg:text-lg font-bold">
-                      {" "}
-                      Stranger Things
-                    </span>
-                    <span className="text-sm text-sky-500">Downloading...</span>
-                  </div>
-                  <img src="assets/download-icon.gif" alt="" className="h-12" />
+        {/* Offline Experience: Professional & Clean */}
+        <div className="bg-white/5 py-48">
+          <div className="max-w-5xl mx-auto px-10 text-center">
+            <ShieldCheck className="text-mirage-gold mx-auto mb-10 opacity-40" size={48} />
+            <h2 className="text-5xl md:text-6xl font-serif text-white italic mb-10">Total_Seclusion</h2>
+            <p className="text-xl text-mirage-silver/40 font-light max-w-3xl mx-auto mb-20 leading-relaxed">
+              Our encrypted offline protocol allows you to carry the essence of the mirage anywhere. No connections, no tracking, just pure cinema.
+            </p>
+            <div className="relative max-w-4xl mx-auto rounded-[3rem] overflow-hidden mirage-glass p-4 border border-white/5">
+              <img src="/assets/extraction.jpg" alt="Premium" className="w-full grayscale brightness-[0.4] rounded-[2.5rem]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-mirage-obsidian/90 border border-mirage-gold/30 px-10 py-6 rounded-full backdrop-blur-xl">
+                  <p className="text-mirage-gold text-xs tracking-[0.5em] font-light uppercase">OFFLINE_MODE_ACTIVE</p>
                 </div>
               </div>
             </div>
           </div>
-          {/* right side */}
-          <div className="flex-1 md:text-left text-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Download your shows to watch offline
-            </h2>
-            <p className="text-lg md:text-xl">
-              Save your favourites easily and always have something to watch.
-            </p>
-          </div>
         </div>
-      </div>
+      </section>
 
-      {/* separator */}
-      <div className="h-1 w-full bg-sky-500" aria-hidden="true" />
-
-      {/* 3rd section */}
-      <div
-        className="py-10 bg-black text-white inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
-        }}
-      >
-        <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2">
-          {/* left side */}
-          <div className="flex-1 text-center md:text-left">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Watch everywhere
-            </h2>
-            <p className="text-lg md:text-xl">
-              Stream unlimited movies and TV shows on your phone, tablets,
-              laptop and TV.
-            </p>
-          </div>
-          {/* right side */}
-          <div className="flex-1 relative overflow-hidden">
-            <img
-              src="/assets/device-pile.png"
-              alt="Device image"
-              className="mt-4 z-20 relative"
-            />
-            <video
-              className="absolute top-2 left-1/2 -translate-x-1/2  h-4/6 z-10 max-w-[63%]"
-              playsInline
-              autoPlay={true}
-              muted
-              loop
-            >
-              <source src="/assets/video-devices.m4v" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-
-      {/* separator */}
-      <div className="h-1 w-full bg-sky-500" aria-hidden="true" />
-
-      {/* 4th section */}
-      <div
-        className="py-10 text-white inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(125% 125% at 50% 100%, #000000 40%, #010133 100%)",
-        }}
-      >
-        <div className="flex max-w-6xl mx-auto items-center justify-center md:flex-row flex-col px-4 md:px-2">
-          {/* left side */}
-          <div className="flex-1">
-            <div className=" relative">
-              <img
-                src="/assets/kids.png"
-                alt="Stranger Things img"
-                className="mt-4"
-              />
-            </div>
-          </div>
-          {/* right side */}
-          <div className="flex-1 md:text-left text-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Create profiles for kids{" "}
-            </h2>
-            <p className="text-lg md:text-xl">
-              Send kids on adventures with their favourite characters in a space
-              made just for them-free with your membership
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* separator */}
-      <div className="h-1 w-full bg-sky-500" aria-hidden="true" />
-
-      {/* <div className="py-20 bg-gradient-to-r from-blue-950 to-black text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            key={testimonialIndex}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
+      {/* Final Curator Call */}
+      <section className="relative z-10 py-64 text-center border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-10">
+          <Moon className="text-mirage-gold mx-auto mb-10 opacity-20" size={32} />
+          <h2 className="text-6xl md:text-8xl font-serif text-white italic mb-16 tracking-tighter">Your_Seat_Is_Reserved</h2>
+          <Link
+            to="/signup"
+            className="inline-block px-20 py-8 bg-mirage-gold text-black font-bold text-sm tracking-[0.4em] hover:bg-white transition-all duration-1000 rounded-full gold-glow"
           >
-            <img
-              src={currentTestimonial.image}
-              alt={currentTestimonial.name}
-              className="mx-auto w-20 h-20 rounded-full border-4 border-blue-400 mb-4"
-            />
-            <p className="text-lg italic mb-2">"{currentTestimonial.quote}"</p>
-            <p className="font-bold text-blue-400">
-              - {currentTestimonial.name}
-            </p>
-          </motion.div>
+            JOIN_THE_ESTATE
+          </Link>
+          <p className="mt-12 text-[10px] text-mirage-silver/20 tracking-[0.4em] uppercase font-light">LIMITED_MEMBERSHIPS_AVAILABLE</p>
         </div>
-      </div> */}
+      </section>
 
-      {/* separator */}
-      <div className="h-1 w-full bg-sky-500" aria-hidden="true" />
-
-      {/* Interactive FAQ Section */}
-      <div className="py-20 bg-black text-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Frequently Asked Questions
-          </h2>
-          {[
-            // {
-            //   q: "Can I cancel anytime?",
-            //   a: "Yes, cancel whenever you like with no fees.",
-            // },
-            {
-              q: "What can I watch on Flicksy?",
-              a: "You can watch thousands of movies and TV shows.",
-            },
-            // {
-            //   q: "Is Flicksy suitable for kids?",
-            //   a: "Yes! Flicksy has dedicated kids' profiles.",
-            // },
-          ].map((faq, i) => (
-            <details
-              key={i}
-              className="mb-4 border border-blue-700 rounded p-4"
-            >
-              <summary className="cursor-pointer text-lg font-semibold">
-                {faq.q}
-              </summary>
-              <p className="mt-2 text-blue-200">{faq.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-
-      {/* Live Stats Section */}
-      <div className="py-20 bg-gradient-to-b from-black to-blue-950 text-white">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div>
-            <p className="text-4xl font-bold text-blue-400">10K+</p>
-            <p>Movies Available</p>
-          </div>
-          <div>
-            <p className="text-4xl font-bold text-blue-400">50M+</p>
-            <p>Active Users</p>
-          </div>
-          <div>
-            <p className="text-4xl font-bold text-blue-400">120</p>
-            <p>Countries Served</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Animated CTA */}
-      <div className="py-16 bg-gradient-to-b from-black from-10% to-transparent text-white text-center animate-pulse">
-        <h2 className="text-3xl font-bold mb-4">Ready to dive in?</h2>
-        <p className="mb-6">Sign up now and get your first month FREE 🎉</p>
-        <Link
-          to="/signup"
-          className="inline-block bg-white text-blue-700 font-bold px-6 py-3 rounded shadow-lg hover:bg-gray-100 transition"
-        >
-          Join Flicksy Today
-        </Link>
-      </div>
       <Footer />
     </div>
   );
 };
+
 export default AuthScreen;

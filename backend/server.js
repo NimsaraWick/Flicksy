@@ -18,7 +18,10 @@ const PORT = ENV_VARS.PORT;
 
 app.use(express.json()); //allow us to pass req.body
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: ENV_VARS.CLIENT_URL,
+    credentials: true,
+}));
 
 app.get("/",(req,res)=>{
     res.send("API is running...");
