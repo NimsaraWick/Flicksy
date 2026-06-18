@@ -11,12 +11,11 @@ export const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      await login({ email, password });
       console.log("Login successful");
       // Optionally, redirect the user to another page after login
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Invalid email or password. Please try again.");
     }
   };
 
