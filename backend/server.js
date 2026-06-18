@@ -23,7 +23,20 @@ const PORT = ENV_VARS.PORT;
 app.use(express.json()); //allow us to pass req.body
 app.use(cookieParser());
 app.use(cors({
-    origin: ENV_VARS.CLIENT_URL,
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        
+        // Remove trailing slash from both for comparison
+        const normalizedOrigin = origin.replace(/\/$/, "");
+        const normalizedClientUrl = ENV_VARS.CLIENT_URL.replace(/\/$/, "");
+        
+        if (normalizedOrigin === normalizedClientUrl) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
 }));
 
