@@ -7,7 +7,7 @@ const options = {
     info: {
       title: "Flicksy API Documentation",
       version: "1.0.0",
-      description: "API documentation for the Flicksy Netflix Clone application",
+      description: "API documentation for the Flicksy application",
     },
     servers: [
       {
@@ -25,7 +25,7 @@ const options = {
       },
     },
   },
-  apis: ["./routes/*.js"], // Path to the API docs
+  apis: ["./backend/routes/*.js"], // Corrected path relative to root
 };
 
 const specs = swaggerJsdoc(options);
