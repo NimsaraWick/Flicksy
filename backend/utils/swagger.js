@@ -1,6 +1,8 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
+import path from "path";
+
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -12,7 +14,7 @@ const options = {
     servers: [
       {
         url: "/api/v1",
-        description: "Development server",
+        description: "Relative server",
       },
     ],
     components: {
@@ -25,7 +27,7 @@ const options = {
       },
     },
   },
-  apis: ["./backend/routes/*.js"], // Corrected path relative to root
+  apis: [path.join(process.cwd(), "backend/routes/*.js"), path.join(process.cwd(), "routes/*.js")], 
 };
 
 const specs = swaggerJsdoc(options);
