@@ -25,3 +25,6 @@ frontend/node_modules/
 *.sln
 *.sw?
 frontend/GEMINI.md
+CICD.md
+test-results/
+playwright-report/

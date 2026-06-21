@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "build": "npm install &&  npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install &&  npm install --prefix frontend && npm run build --prefix frontend",
+    "test:e2e": "playwright test"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.0",
     "nodemon": "^3.1.10"
   }
 }

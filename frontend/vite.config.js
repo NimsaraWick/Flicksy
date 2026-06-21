@@ -17,5 +17,14 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    // for unit and integration testing
+    test: {
+      // Allow using 'describe', 'it', 'expect' without explicit imports
+      globals: true,
+      // Simulate browser environment for React components
+      environment: "jsdom",
+      // Global setup file for custom matchers (like jest-dom)
+      setupFiles: "./src/test-setup.js",
+    },
   };
 });

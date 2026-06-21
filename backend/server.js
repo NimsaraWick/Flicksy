@@ -31,7 +31,9 @@ app.use(cors({
         const normalizedOrigin = origin.replace(/\/$/, "");
         const normalizedClientUrl = ENV_VARS.CLIENT_URL.replace(/\/$/, "");
         
-        if (normalizedOrigin === normalizedClientUrl) {
+        const isLocalhost = /^https?:\/\/localhost(:\d+)?$/.test(normalizedOrigin);
+        
+        if (normalizedOrigin === normalizedClientUrl || (process.env.NODE_ENV !== "production" && isLocalhost)) {
             callback(null, true);
         } else {
             callback(new Error("Not allowed by CORS"));
