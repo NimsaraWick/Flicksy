@@ -37,11 +37,15 @@ export default defineConfig({
       command: 'npm run dev',
       url: 'http://localhost:5000',
       reuseExistingServer: !process.env.CI,
+      stdout: 'pipe',
+      stderr: 'pipe',
     },
     {
       command: 'npm run dev --prefix frontend',
       url: 'http://localhost:5173',
       reuseExistingServer: !process.env.CI,
+      stdout: 'pipe',
+      stderr: 'pipe',
     },
   ],
 });

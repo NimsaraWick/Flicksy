@@ -29,7 +29,7 @@ app.use(cors({
         
         // Remove trailing slash from both for comparison
         const normalizedOrigin = origin.replace(/\/$/, "");
-        const normalizedClientUrl = ENV_VARS.CLIENT_URL.replace(/\/$/, "");
+        const normalizedClientUrl = (ENV_VARS.CLIENT_URL || "").replace(/\/$/, "");
         
         const isLocalhost = /^https?:\/\/localhost(:\d+)?$/.test(normalizedOrigin);
         
