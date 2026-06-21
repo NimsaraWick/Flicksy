@@ -9,6 +9,8 @@ export const connectDB = async() =>{
     }
     catch(error){
         console.log("Error connecting to MongoDB: " + error.message);
-        process.exit(1); //2 means error and 0 means success 
+        if (process.env.NODE_ENV === "production") {
+            process.exit(1); // Exit in production, but let server run in dev/testing
+        }
     }
 }
