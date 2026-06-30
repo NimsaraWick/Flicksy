@@ -6,7 +6,7 @@
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
     "build": "npm install &&  npm install --prefix frontend && npm run build --prefix frontend",
-    "test:e2e": "playwright test"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config backend/jest.config.js"
   },
   "keywords": [],
   "author": "",
@@ -33,7 +33,9 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.0",
-    "nodemon": "^3.1.10"
+    "@types/jest": "^30.0.0",
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.2.2"
   }
 }
