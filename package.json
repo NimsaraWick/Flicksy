@@ -6,7 +6,7 @@
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
     "build": "npm install &&  npm install --prefix frontend && npm run build --prefix frontend",
-    "test:e2e": "playwright test"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config backend/jest.config.js"
   },
   "keywords": [],
   "author": "",
@@ -14,26 +14,22 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@react-three/drei": "^10.6.1",
-    "@react-three/fiber": "^9.3.0",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "framer-motion": "^12.23.12",
-    "gsap": "^3.13.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
-    "react-helmet": "^6.1.0",
-    "react-helmet-async": "^2.0.0",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.0",
-    "nodemon": "^3.1.10"
+    "@types/jest": "^30.0.0",
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.2.2"
   }
 }
