@@ -2,7 +2,7 @@ FROM node:latest
 
 WORKDIR /app 
 
-COPY backend/* ./
+COPY backend ./backend/ 
 COPY package*.json ./
 COPY package-lock.json ./
 
